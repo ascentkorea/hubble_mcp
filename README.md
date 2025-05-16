@@ -5,7 +5,16 @@
 * Claude Desktop 설치
   * https://claude.ai/download
 * uv 설치 (hubble MCP Server 는 파이썬으로 작성되었습니다.)
-  * https://modelcontextprotocol.io/quickstart/server#set-up-your-environment
+  > 참조: https://modelcontextprotocol.io/quickstart/server#set-up-your-environment
+  * MacOS/Linux
+    ```
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    ```
+  * Windows
+    ```
+    powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+    ```
+  
 * Hubble MCP Server 다운로드
   * https://github.com/ascentkorea/hubble_mcp/releases
     * zip 파일 다운로드후, 압축해제 (아래 설정파일 에서 해당 경로 필요)
