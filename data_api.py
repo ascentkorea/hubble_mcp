@@ -318,12 +318,12 @@ mcp = FastMCP("hubble")
 @async_retry(exceptions=(Exception), tries=2, delay=0.3)
 async def get_search_path(keyword: str,
                           gl: Literal['kr', 'jp'] = "kr",
-                          limit=100) -> dict[str, Any] | None:
+                          limit=200) -> dict[str, Any] | None:
     """Make a request to the Path Finder API of Hubble with proper error handling.
         Args:
             keyword: str, 검색 키워드
             gl: str, 지역 코드 한국 일본(kr, jp)
-            limit: int, 검색 경로 분석 결과 최대 개수
+            limit: int, 검색 경로 분석 결과 최대 개수(기본값 200)
         Returns:
             dict[str, Any] | None: 검색 경로 분석 결과
     """
