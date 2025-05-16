@@ -3,7 +3,7 @@
 > ### ⚠️ **주의**
 > 현재는 사내 VPN 환경에서만 사용 가능합니다.
 > > 간혹 API 가 실패 할수 있으니, 데이터 응답을 정상적으로 수신 했는지 확인이 필요 합니다.  
-> > (클로드가 툴 사용시 나온 메시지를 클릭해서 API 응답 메시지 확인이 가능합니다. )
+> > (클로드가 툴 사용한 메시지를 클릭하면, API 응답 메시지 확인이 가능합니다. )
 
 ## set-up-your-environment
 
@@ -92,12 +92,12 @@ MacOS/Linux 설정 파일 샘플
 }
 ```
 
-## 제공 되는 tool(기능) 설명
+## 제공 되는 tool(기능) 설명 ( https://hubble-data-api.ascentlab.io/ )
 
 * get_search_path: 검색 경로 API
-* get_keyword_info: 키워드에 대한 검색량및 다양한 정보
+* get_keyword_info: 키워드에 대한 검색량(월별 검색량), 구글 SERP에 출현하는 feature type 요약, 검색 인텐트(INCT), 한국의 경우 성비/연령비
 * get_graph_info: 키워드간의 관계 정보
 * crawl_google_serp: 구글 SERP API
+* crawl_web_page: 일반 웹페이지 수집 API
 * crawl_google_suggest_extension: 구글 서제스트 API
-  > ⚠️ 현재 응답데이터가 너무 많아서, 조절 하려고 하고 있습니다. 당분간 disable 추천 드립니다.
 * crawl_google_trends: 구글 트렌드 API
