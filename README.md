@@ -92,3 +92,12 @@ MacOS/Linux 설정 파일 샘플
 }
 ```
 
+## 제공 되는 tool(기능) 설명
+
+* get_search_path: 검색 경로 API
+* get_keyword_info: 키워드에 대한 검색량및 다양한 정보
+* get_graph_info: 키워드간의 관계 정보
+* crawl_google_serp: 구글 SERP API
+* crawl_google_suggest_extension: 구글 서제스트 API
+  > ⚠️ 현재 응답데이터가 너무 많아서, 조절 하려고 하고 있습니다. 당분간 disable 추천 드립니다.
+* crawl_google_trends: 구글 트렌드 API
