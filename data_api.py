@@ -430,7 +430,7 @@ async def get_graph_info(
 
 @mcp.tool()
 @async_retry(exceptions=(Exception), tries=2, delay=0.3)
-async def get_serp_info(
+async def crawl_google_serp(
         keyword: str,
         gl: Literal['kr', 'us', 'jp'] = "kr") -> dict[SerpResponse, Any] | None:
     '''
