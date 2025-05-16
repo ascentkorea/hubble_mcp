@@ -14,6 +14,7 @@
     ```
     powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
     ```
+    일부 보안 프로그램의 실시간 감시에서 `uv` 명령어가 차단될 경우, 실시간 감시를 중단 또는 해당 파일을 제외 시켜 주세요~
   * MacOS/Linux
     ```
     curl -LsSf https://astral.sh/uv/install.sh | sh
