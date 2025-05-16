@@ -12,6 +12,10 @@
     * 가장 최신 버전 사용
 * HUBBLE_API_KEY 발급
 
+<a href="https://glama.ai/mcp/servers/@ascentkorea/hubble_mcp">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/@ascentkorea/hubble_mcp/badge" alt="Hubble Server MCP server" />
+</a>
+
 ## claude_desktop_config.json  파일 설정
 
 * 클로드 데스크탑 > 파일 > 설정(Ctrl + ,) > 개발자 > 설정 편집
@@ -77,4 +81,3 @@
   }
 }
 ```
-
