@@ -529,14 +529,19 @@ async def crawl_google_suggest_extensions(
         response.raise_for_status()
         return response.text
     
+class GoogleTrendsParameters(BaseModel):
+    keywords: List[str] = Field(
+        min_items=1,
+        max_items=3,
+    )
+    location: Literal['South Korea', 'Japan']
+    timeframe: Literal['now 1-H', 'now 7-d', 'today 1-m']
+    gl: Literal['kr', 'jp']
 
 @mcp.tool()
 @async_retry(exceptions=(Exception), tries=2, delay=0.3)
 async def crawl_google_trends(
-        keywords: List[str],
-        location: Literal['South Korea', 'Japan'],
-        timeframe: Literal['now 1-H', 'now 7-d', 'today 1-m', ],
-        gl: Literal['kr', 'jp']) -> dict[Any] | None:
+        req_param: GoogleTrendsParameters) -> dict[Any] | None:
     '''
     구글 트렌드 수집 요청
     최근 며칠 이내의 키워드 트렌드 추이를 0~100 사이의 값으로 표현 됩니다.
@@ -555,17 +560,11 @@ async def crawl_google_trends(
     '''
 
     async with httpx.AsyncClient() as client:
-        payload = {
-            "keywords": keywords,
-            "gl": gl,
-            "location": location,
-            "timeframe": timeframe
-        }
         headers = {"X-API-Key": HUBBLE_API_KEY}
         response = await client.post(
             "https://hubble-data-api.ascentlab.io/google_trend",
             headers=headers,
-            json=payload,
+            json=json.loads(req_param.model_dump_json()),
             timeout=30.0)
         response.raise_for_status()
         return response.text
@@ -597,5 +596,6 @@ if __name__ == "__main__":
     # print(resp)
     # resp = asyncio.run(crawl_google_suggest_extensions("냉장고", "kr"))
     # print(resp)
-    # resp = asyncio.run(crawl_google_trends(["냉장고"], "South Korea", "now 7-d", "kr"))
+    # req_param = GoogleTrendsParameters(keywords=["냉장고"], location="South Korea", timeframe="now 7-d", gl="kr")
+    # resp = asyncio.run(crawl_google_trends(req_param))
     # print(resp)
