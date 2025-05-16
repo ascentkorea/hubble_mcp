@@ -384,12 +384,11 @@ async def get_keyword_info(
     '''
 
     async with httpx.AsyncClient() as client:
-        req_param_json = req_param.model_dump_json()
         headers = {"X-API-Key": HUBBLE_API_KEY}
         response = await client.post(
             "https://hubble-data-api.ascentlab.io/keyword",
             headers=headers,
-            json=json.loads(req_param_json),
+            json=req_param.model_dump(),
             timeout=30.0)
         response.raise_for_status()
         return response.text
@@ -418,12 +417,11 @@ async def get_graph_info(
     '''
 
     async with httpx.AsyncClient() as client:
-        req_param_json = req_param.model_dump_json()
         headers = {"X-API-Key": HUBBLE_API_KEY}
         response = await client.post(
             "https://hubble-data-api.ascentlab.io/cluster",
             headers=headers,
-            json=json.loads(req_param_json),
+            json=req_param.model_dump(),
             timeout=30.0)
         response.raise_for_status()
         return response.text
@@ -564,7 +562,7 @@ async def crawl_google_trends(
         response = await client.post(
             "https://hubble-data-api.ascentlab.io/google_trend",
             headers=headers,
-            json=json.loads(req_param.model_dump_json()),
+            json=req_param.model_dump(),
             timeout=30.0)
         response.raise_for_status()
         return response.text
