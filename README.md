@@ -95,7 +95,7 @@ MacOS/Linux 설정 파일 샘플
 ## 제공 되는 tool(기능) 설명
 
 * get_search_path: 검색 경로 API
-* get_keyword_info: 키워드에 대한 검색량및 다양한 정보
+* get_keyword_info: 키워드에 대한 검색량(월별 검색량), 구글 SERP에 출현하는 feature type 요약, 검색 인텐트(INCT), 한국의 경우 성비/연령비
 * get_graph_info: 키워드간의 관계 정보
 * crawl_google_serp: 구글 SERP API
 * crawl_web_page: 일반 웹페이지 수집 API
