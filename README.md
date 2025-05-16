@@ -52,7 +52,7 @@
 }
 ```
 
-윈도우 샘플
+Windows 설정 파일 샘플
 ```json
 {
   "mcpServers": {
@@ -72,7 +72,7 @@
 }
 ```
 
-맥 샘플
+MacOS/Linux 설정 파일 샘플
 ```json
 {
   "mcpServers": {
