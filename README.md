@@ -98,5 +98,6 @@ MacOS/Linux 설정 파일 샘플
 * get_keyword_info: 키워드에 대한 검색량및 다양한 정보
 * get_graph_info: 키워드간의 관계 정보
 * crawl_google_serp: 구글 SERP API
+* crawl_web_page: 일반 웹페이지 수집 API
 * crawl_google_suggest_extension: 구글 서제스트 API
 * crawl_google_trends: 구글 트렌드 API
