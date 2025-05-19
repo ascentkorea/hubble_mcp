@@ -14,6 +14,8 @@ from mcp.server.fastmcp import FastMCP
 HUBBLE_API_KEY = os.environ.get('HUBBLE_API_KEY')
 assert HUBBLE_API_KEY, f"HUBBLE_API_KEY is not set"
 
+HUBBLE_API_URL = "https://hubble-data-api.ascentlab.io"
+# HUBBLE_API_URL = "http://hubbled-service-api.ascentlab.local"
 
 class TooManyTriesException(Exception):
     pass
@@ -332,7 +334,7 @@ async def get_search_path(keyword: str,
     headers = {"X-API-Key": HUBBLE_API_KEY}
     async with httpx.AsyncClient() as client:
         response = await client.post(
-            "https://hubble-data-api.ascentlab.io/path_finder",
+            f"{HUBBLE_API_URL}/path_finder",
             headers=headers,
             json=payload,
             timeout=30.0)
@@ -386,7 +388,7 @@ async def get_keyword_info(
     async with httpx.AsyncClient() as client:
         headers = {"X-API-Key": HUBBLE_API_KEY}
         response = await client.post(
-            "https://hubble-data-api.ascentlab.io/keyword",
+            f"{HUBBLE_API_URL}/keyword",
             headers=headers,
             json=req_param.model_dump(),
             timeout=30.0)
@@ -419,7 +421,7 @@ async def get_graph_info(
     async with httpx.AsyncClient() as client:
         headers = {"X-API-Key": HUBBLE_API_KEY}
         response = await client.post(
-            "https://hubble-data-api.ascentlab.io/cluster",
+            f"{HUBBLE_API_URL}/cluster",
             headers=headers,
             json=req_param.model_dump(),
             timeout=30.0)
@@ -442,7 +444,7 @@ async def crawl_google_serp(
         }
         headers = {"X-API-Key": HUBBLE_API_KEY}
         response = await client.post(
-            "https://hubble-data-api.ascentlab.io/serp",
+            f"{HUBBLE_API_URL}/serp",
             headers=headers,
             json=payload,
             timeout=30.0)
@@ -464,7 +466,7 @@ async def crawl_web_page(
     async with httpx.AsyncClient() as client:
         headers = {"X-API-Key": HUBBLE_API_KEY}
         response = await client.post(
-            "https://hubble-data-api.ascentlab.io/web_crawl",
+            f"{HUBBLE_API_URL}/web_crawl",
             headers=headers,
             json=url_list,
             timeout=30.0)
@@ -520,7 +522,7 @@ async def crawl_google_suggest_extensions(
         }
         headers = {"X-API-Key": HUBBLE_API_KEY}
         response = await client.post(
-            "https://hubble-data-api.ascentlab.io/google_suggest_ex",
+            f"{HUBBLE_API_URL}/google_suggest_ex",
             headers=headers,
             json=payload,
             timeout=30.0)
@@ -548,6 +550,14 @@ async def crawl_google_trends(
     값은 검색 빈도가 가장 높은 검색어의 경우 100, 검색 빈도가 그 절반 정도인 검색어의 경우 50, 
     해당 검색어에 대한 데이터가 충분하지 않은 경우 0으로 나타납니다.
 
+    키워드 하나에 대한 검색 관심도 추이를 알수 있으며, 최대 3개 키워드를 비교 할수 있습니다.
+    특정 키워드하나를 입력했을때, 특정 기간의 최대값이 100 이라고 했을때,
+    키워드 여러개 입력시에는 검색관심도가 가장 큰 키워드는 0~100 사이값으로 표현되고, 나머지는 적절히 스케일링 되므로 
+    비교시에 특정 키워드의 최대값은 100이 아닐수 있습니다.
+    따라서, 키워드간 관심도 비교시에 4개 이상의 키워드를 비교 하기 위해서는 
+    우선 3개를 비교 하고, 이후 가장 높은 관심도가 있는 키워드를 계속 같이 추가해야 각 수치간에 비교가 가능해집니다.
+
+
     args:
         keywords: List[str], 키워드 리스트
         location: Literal['South Korea', 'Japan'],
@@ -560,7 +570,7 @@ async def crawl_google_trends(
     async with httpx.AsyncClient() as client:
         headers = {"X-API-Key": HUBBLE_API_KEY}
         response = await client.post(
-            "https://hubble-data-api.ascentlab.io/google_trend",
+            f"{HUBBLE_API_URL}/google_trend",
             headers=headers,
             json=req_param.model_dump(),
             timeout=30.0)
@@ -586,8 +596,7 @@ if __name__ == "__main__":
     # req_param = ClusterParameters(keyword="냉장고", limit=20, hop=2, orientation="UNDIRECTED")
     # resp = asyncio.run(get_graph_info(req_param))
     # print(resp)
-    # req_param = SerpParameters(keyword="냉장고")
-    # resp = asyncio.run(get_serp_info(req_param))
+    # resp = asyncio.run(crawl_google_serp(keyword="섬유탈취제 언제 사용", gl="kr"))
     # print(resp)
     # url_list = ["https://www.ascentkorea.com/seo_six_essential_elements/","https://www.ascentkorea.com/about/"]
     # resp = asyncio.run(crawl_web_page(url_list))
