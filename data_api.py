@@ -476,53 +476,35 @@ async def crawl_web_page(
 
 @mcp.tool()
 @async_retry(exceptions=(Exception), tries=2, delay=0.3)
-async def crawl_google_suggest_extensions(
-        keyword: str,
-        gl: Literal['kr', 'us', 'jp'] = "kr") -> dict[Any] | None:
+async def crawl_google_suggest(
+        q: str,
+        gl: Literal['kr', 'us', 'jp'] = "kr",
+        hl: Literal['ko', 'en', 'ja'] = "ko") -> dict[Any] | None:
     '''
-    키워드에 대한 구글 서제스트 확장 키워드 수집 요청
+    키워드에 대한 구글 서제스트 키워드 수집 요청
     args:
         keyword: str, 키워드
         gl: Literal['kr', 'us', 'jp'] = "kr", 국가 코드
+        hl: Literal['ko', 'en', 'ja'] = "ko", 국가 언어
     returns:
-        dict[Any] | None: 구글 서제스트 확장 키워드 수집 결과
+        dict[Any] | None: 구글 서제스트 수집 결과
 
-    키워드 확장
-    suggestions(common)
-    키워드의 suggestions(1 depth) + 1 depth 결과들의 suggestions(2 depth)
+    키워드 suggestions
 
-    suffix(나라별)
-
-    한국 (gl : kr) : 2405개
-    keyword + space (1 개)
-    keyword + 한글 자음(ㄱ~ㅎ: 19 개)
-    keyword + 한글 음절 (2350 개)
-    keyword + 알파벳(a~z: 26 게)
-    keyword + 숫자(0~9: 10 개)
-
-    미국 (gl : us) : 37개
-    keyword + space (1 개)
-    keyword + 알파벳(a~z: 26 개)
-    keyword + 숫자(0~9: 10 개)
-
-    일본 (gl : jp) : 2318개
-    keyword + space (1 개)
-    keyword + 히라가나 (46 개)
-    keyword + 히라가나 * 히라가나 (2116 개)
-    keyword + 가타카나 (46 개)
-    keyword + 일어 음절 (73 개)
-    keyword + 알파벳(a~z: 26 개)
-    keyword + 숫자(0~9: 10 개)
+    한국 {gl: kr, hl: ko}
+    미국 {gl: us, hl: en}
+    일본 {gl: jp, hl: ja}
     '''
 
     async with httpx.AsyncClient() as client:
         payload = {
-            "keyword": keyword,
-            "gl": gl
+            "q": q,
+            "gl": gl,
+            "hl": hl
         }
         headers = {"X-API-Key": HUBBLE_API_KEY}
         response = await client.post(
-            f"{HUBBLE_API_URL}/google_suggest_ex",
+            f"{HUBBLE_API_URL}/google_suggest",
             headers=headers,
             json=payload,
             timeout=30.0)
@@ -601,7 +583,7 @@ if __name__ == "__main__":
     # url_list = ["https://www.ascentkorea.com/seo_six_essential_elements/","https://www.ascentkorea.com/about/"]
     # resp = asyncio.run(crawl_web_page(url_list))
     # print(resp)
-    # resp = asyncio.run(crawl_google_suggest_extensions("냉장고", "kr"))
+    # resp = asyncio.run(crawl_google_suggest("냉장고", "kr"))
     # print(resp)
     # req_param = GoogleTrendsParameters(keywords=["냉장고"], location="South Korea", timeframe="now 7-d", gl="kr")
     # resp = asyncio.run(crawl_google_trends(req_param))
