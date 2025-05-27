@@ -478,29 +478,26 @@ async def crawl_web_page(
 @async_retry(exceptions=(Exception), tries=2, delay=0.3)
 async def crawl_google_suggest(
         q: str,
-        gl: Literal['kr', 'us', 'jp'] = "kr",
-        hl: Literal['ko', 'en', 'ja'] = "ko") -> dict[Any] | None:
+        gl: Literal['kr', 'us', 'jp'] = "kr") -> dict[Any] | None:
     '''
     키워드에 대한 구글 서제스트 키워드 수집 요청
     args:
         keyword: str, 키워드
         gl: Literal['kr', 'us', 'jp'] = "kr", 국가 코드
-        hl: Literal['ko', 'en', 'ja'] = "ko", 국가 언어
     returns:
         dict[Any] | None: 구글 서제스트 수집 결과
 
     키워드 suggestions
 
-    한국 {gl: kr, hl: ko}
-    미국 {gl: us, hl: en}
-    일본 {gl: jp, hl: ja}
+    한국 (gl: kr)
+    미국 (gl: us)
+    일본 (gl: jp)
     '''
 
     async with httpx.AsyncClient() as client:
         payload = {
             "q": q,
             "gl": gl,
-            "hl": hl
         }
         headers = {"X-API-Key": HUBBLE_API_KEY}
         response = await client.post(
