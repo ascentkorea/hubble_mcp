@@ -444,7 +444,7 @@ async def crawl_google_serp(
         }
         headers = {"X-API-Key": HUBBLE_API_KEY}
         response = await client.post(
-            f"{HUBBLE_API_URL}/serp",
+            f"{HUBBLE_API_URL}/google_serp",
             headers=headers,
             json=payload,
             timeout=30.0)
