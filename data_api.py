@@ -14,8 +14,7 @@ from mcp.server.fastmcp import FastMCP
 HUBBLE_API_KEY = os.environ.get('HUBBLE_API_KEY')
 assert HUBBLE_API_KEY, f"HUBBLE_API_KEY is not set"
 
-HUBBLE_API_URL = "https://hubble-data-api.ascentlab.io"
-# HUBBLE_API_URL = "http://hubbled-service-api.ascentlab.local"
+HUBBLE_API_URL = "https://listeningmind-mcp-api.ascentlab.io"
 
 class TooManyTriesException(Exception):
     pass
@@ -323,7 +322,7 @@ async def get_search_path(keyword: str,
                           limit=200) -> dict[str, Any] | None:
     """Make a request to the Path Finder API of Hubble with proper error handling.
         Args:
-            keyword: str, 검색 키워드
+            keyword: str, 검색 키워드(모든 키워드는 소문자로 변환하여 요청)
             gl: str, 지역 코드 한국 일본(kr, jp)
             limit: int, 검색 경로 분석 결과 최대 개수(기본값 200)
         Returns:
@@ -348,6 +347,7 @@ async def get_keyword_info(
         req_param: KeywordParameters) -> dict[KeywordResponse, Any] | None:
     '''
         키워드 정보 조회 (최대 1000개 키워드 조회 가능)
+        모든 키워드는 소문자로 변환하여 요청
         키워드 정보 조회 결과는 키워드 정보 조회 결과 형식에 따라 반환됩니다.
         args:
             req_param: KeywordParameters, 키워드 정보 조회 요청 파라미터
@@ -401,6 +401,7 @@ async def get_graph_info(
         req_param: ClusterParameters) -> dict[ClusterResponse, Any] | None:
     '''
     키워드 관계 정보(허블의 클러스터 파인더 결과 조회, 키워드 관계 정보 조회)
+    모든 키워드는 소문자로 변환하여 요청
     args:
         req_param: ClusterParameters, 키워드 관계 정보 조회 요청 파라미터
     returns:
