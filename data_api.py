@@ -12,7 +12,7 @@ from mcp.server.fastmcp import FastMCP
 HUBBLE_API_KEY = os.environ.get('HUBBLE_API_KEY')
 assert HUBBLE_API_KEY, f"HUBBLE_API_KEY is not set"
 
-HUBBLE_API_URL = "https://listeningmind-mcp-api.ascentlab.io"
+HUBBLE_API_URL = "https://alpha-listeningmind-mcp-api.ascentlab.io"
 
 class TooManyTriesException(Exception):
     pass
@@ -415,7 +415,7 @@ async def crawl_web_page(
         response = await client.post(
             f"{HUBBLE_API_URL}/web_crawl",
             headers=headers,
-            json=url_list,
+            json={"urls": url_list},
             timeout=30.0)
         response.raise_for_status()
         return response.text
