@@ -1,0 +1,13 @@
+services:
+  hubble-mcp-server:
+    image: harbor.ascentlab.io/hubble/hubble_mcp_server:0.0.1
+    build:
+      dockerfile: Dockerfile
+      context: ./
+      args: 
+        HUBBLE_API_KEY: ${HUBBLE_API_KEY}
+    ports:
+      - "8000:8000"
+    environment:
+      - HUBBLE_MCP_URL=https://hubble-mcp.ngrok.dev
+      - HUBBLE_AUTH_URL=https://hubble-auth.ngrok.dev

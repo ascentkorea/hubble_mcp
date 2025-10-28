@@ -385,6 +385,11 @@ async def crawl_google_serp(
         gl: Literal['kr', 'us', 'jp'] = "kr") -> dict[SerpResponse, Any] | None:
     '''
     구글 SERP API 요청
+    args:
+        keyword: str, 키워드
+        gl: Literal['kr', 'us', 'jp'] = "kr", 국가 코드
+    returns:
+        dict[SerpResponse, Any] | None: 구글 SERP 수집 결과
     '''
     async with httpx.AsyncClient() as client:
         payload = {
@@ -399,26 +404,27 @@ async def crawl_google_serp(
             timeout=30.0)
         response.raise_for_status()
         return response.text
-@mcp.tool()
-@async_retry(exceptions=(Exception), tries=2, delay=0.3)
-async def crawl_web_page(
-        url_list: List[str]) -> dict[Any] | None:
-    '''
-    웹 페이지 크롤링
-    args:
-        url_list: List[str], 크롤링할 웹 페이지 리스트
-    returns:
-        dict[Any] | None: 크롤링 결과
-    '''
-    async with httpx.AsyncClient() as client:
-        headers = {"X-API-Key": HUBBLE_API_KEY}
-        response = await client.post(
-            f"{HUBBLE_API_URL}/web_crawl",
-            headers=headers,
-            json={"urls": url_list},
-            timeout=30.0)
-        response.raise_for_status()
-        return response.text
+
+# @mcp.tool()
+# @async_retry(exceptions=(Exception), tries=2, delay=0.3)
+# async def crawl_web_page(
+#         url_list: List[str]) -> dict[Any] | None:
+#     '''
+#     웹 페이지 크롤링
+#     args:
+#         url_list: List[str], 크롤링할 웹 페이지 리스트
+#     returns:
+#         dict[Any] | None: 크롤링 결과
+#     '''
+#     async with httpx.AsyncClient() as client:
+#         headers = {"X-API-Key": HUBBLE_API_KEY}
+#         response = await client.post(
+#             f"{HUBBLE_API_URL}/web_crawl",
+#             headers=headers,
+#             json={"urls": url_list},
+#             timeout=30.0)
+#         response.raise_for_status()
+#         return response.text
     
 @mcp.tool()
 @async_retry(exceptions=(Exception), tries=2, delay=0.3)
@@ -498,7 +504,7 @@ async def crawl_google_trends(
 
 def main():
     # Initialize and run the server
-    mcp.run(transport='stdio')
+    mcp.run(transport='sse')
 
 
 if __name__ == "__main__":
