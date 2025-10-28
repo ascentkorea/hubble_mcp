@@ -591,26 +591,26 @@ async def crawl_google_trends(
         response.raise_for_status()
         return response.json()
 
-@mcp.tool()
-@async_retry(exceptions=(Exception), tries=2, delay=0.3)
-async def crawl_web_page(
-        url_list: List[str]) -> dict[str, Any] | None:
-    '''
-    웹 페이지 크롤링
-    args:
-        url_list: List[str], 크롤링할 웹 페이지 리스트
-    returns:
-        dict[Any] | None: 크롤링 결과
-    '''
-    async with httpx.AsyncClient() as client:
-        headers = {"X-API-Key": settings.HUBBLE_API_KEY}
-        response = await client.post(
-            f"{settings.HUBBLE_API_URL}/web_crawl",
-            headers=headers,
-            json={"urls": url_list},
-            timeout=30.0)
-        response.raise_for_status()
-        return response.json()
+# @mcp.tool()
+# @async_retry(exceptions=(Exception), tries=2, delay=0.3)
+# async def crawl_web_page(
+#         url_list: List[str]) -> dict[str, Any] | None:
+#     '''
+#     웹 페이지 크롤링
+#     args:
+#         url_list: List[str], 크롤링할 웹 페이지 리스트
+#     returns:
+#         dict[Any] | None: 크롤링 결과
+#     '''
+#     async with httpx.AsyncClient() as client:
+#         headers = {"X-API-Key": settings.HUBBLE_API_KEY}
+#         response = await client.post(
+#             f"{settings.HUBBLE_API_URL}/web_crawl",
+#             headers=headers,
+#             json={"urls": url_list},
+#             timeout=30.0)
+#         response.raise_for_status()
+#         return response.json()
 
 if __name__ == "__main__":
     logger.info("Starting FastMCP server...")

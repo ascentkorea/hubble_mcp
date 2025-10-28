@@ -1,6 +1,6 @@
 services:
   hubble-mcp-server:
-    image: harbor.ascentlab.io/hubble/hubble_mcp_server:0.0.1
+    image: harbor.ascentlab.io/hubble/hubble_mcp_server:0.0.2
     build:
       dockerfile: Dockerfile
       context: ./
